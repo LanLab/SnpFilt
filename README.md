@@ -2,7 +2,7 @@ SnpFilt is a package for identifying sequence variants in high-throughput
 sequencing reads using reference-free assemblies
 
 Installation
-============
+------------
 SnpFilt has only been tested on a Linux system. Specifically it requires the
 following programs to be available
 * Perl
@@ -37,11 +37,13 @@ or put a symlink to <snpfilt>/snpfilt.pl in a directory in your path.
 
 
 Running SnpFilt
-===============
+---------------
 To find sequence variants to a given set of reads type
 
     > <snpfiltpath>/snpfilt.pl pipeline <outdir> <reads1.fastq> <reads2.fastq> <refseq.fasta>
+
 or 
+
     > perl <snpfiltpath>/snpfilt.pl pipeline <outdir> <reads1.fastq> <reads2.fastq> <refseq.fasta>
 
 For further instructions regarding usage simply type
@@ -53,7 +55,7 @@ regarding usage is available in the run_example.sh script.
 
 
 Output Files
-============
+------------
 SnpFilt creates a directory for each isolate and generates a number of
 output files in the directory
 
