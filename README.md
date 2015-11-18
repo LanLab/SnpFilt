@@ -33,7 +33,7 @@ Once file paths are set correctly, SnpFilt can be installed typing
     > ./install.sh
 
 To put in snpfilt into the path you can add the snpfilt directory to your $PATH varable
-or put a symlink to <snpfilt>/snpfilt.pl in a directory in your path.
+or put a symlink to snpfilt/snpfilt.pl in a directory in your path.
 
 
 Running SnpFilt
@@ -67,8 +67,8 @@ output files in the directory
 The files listed above are always created and use only information based on
 the reads themself. When a reference genome is provided the isolate will be
 compared with it generate the additional files
-* snpfilt_results_<fstem>.csv: CSV file listing all potential SNPs and the filter code describing their reliability
-* aln_<fstem>.cigarx: tabular file giving positions where assembly aligned to the reference genome
+* snpfilt_results_fstem.csv: CSV file listing all potential SNPs and the filter code describing their reliability
+* aln_fstem.cigarx: tabular file giving positions where assembly aligned to the reference genome
 
 
 
