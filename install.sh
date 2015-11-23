@@ -187,10 +187,9 @@ echo "\$SPADES = \"${SPADES}\";" >> $outscript
 echo "\$BWA = \"${BWA}\";" >> $outscript
 cat snpfilt_stem.pl >> $outscript
 
-cd $CURRDIR
-chmod a+x snpfilt
-chmod a+x snpfilt/snpfilt.pl
+chmod a+x $SCRIPTDIR
+chmod a+x $SCRIPTDIR/snpfilt.pl
 
 echo ""
-echo "INSTALL complete!"
+echo "Install complete!"
 echo "To place snpfilt into PATH, append $SCRIPTDIR into path or symlink to $SCRIPTDIR/snpfilt.pl"
