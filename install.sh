@@ -5,7 +5,8 @@ CURRDIR=$(pwd)
 # User-modifiable variables
 
 # Directory where the program is installed
-SCRIPTDIR="$CURRDIR/snpfilt"
+#SCRIPTDIR="$CURRDIR/snpfilt"
+SCRIPTDIR=/srv/scratch/lanlab/SnpFilt
 
 # Dependent programs
 # By default, the script will look for versions on the path
@@ -165,14 +166,12 @@ fi
 # We don't use default user libraries to avoid problems
 # when installing for in multi-user environments
 mkdir $SCRIPTDIR/rlib
-export R_LIBS="$SCRIPTDIR/rlib"
-R CMD BATCH --vanilla install_rpckg.R
+R CMD BATCH --vanilla "--args RLIB='$SCRIPTDIR/rlib'" install_rpckg.R
 if [ $? -ne 0 ]
 then
     echo "error: could not install R package - check install_rpckg.Rout"
     exit 1
 fi
-unset R_LIBS
 
 cd src
 cp best_match.pl convert_fasta.pl filter_contigs.R find_ctgpos.pl format_bcf.pl get_seqvar_pos.pl get_SNPtable.pl *.scores merge_snptable.pl plot_context.R $SCRIPTDIR
