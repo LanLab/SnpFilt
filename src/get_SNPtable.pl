@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#/usr/bin/env perl
 use Getopt::Long;
 
 %REV_BASE = ('C'=>'G', 'G'=>'C', 'A'=>'T', 'T'=>'A');
@@ -64,7 +64,7 @@ foreach $dd (@dirs)
     foreach $i (0..$#gpos)
     {
         $seq = 'N';
-        $gpos_str = "$chrom[$i],$gpos[$i],";
+        $gpos_str = quote("$chrom[$i],$gpos[$i],");
         @cpos_match = grep {$_=~/$gpos_str/} @info;
         @ln = split /,/, $cpos_match[0];
         $cpos_str = "$ln[2],$ln[3]";
