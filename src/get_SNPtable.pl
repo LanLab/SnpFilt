@@ -1,4 +1,4 @@
-#/usr/bin/env perl
+#!/usr/bin/env perl
 use Getopt::Long;
 
 %REV_BASE = ('C'=>'G', 'G'=>'C', 'A'=>'T', 'T'=>'A');
@@ -17,7 +17,7 @@ $topdir = $ARGV[1];
 die "No directories inside $topdir" if $#dirs==0;
 $allpos = "all_snppos.csv";
 
-system ("grep \'^0,\' $topdir/*/snpfilt_results\_$fstem.csv | grep \',X\' | cut -d, -f 2,3 | sort | uniq > $allpos");
+system ("grep \'^0,\' $topdir/*/snpfilt_results\_$fstem.csv | grep \',X\' | cut -d, -f 2,3,4 | sort | uniq > $allpos");
 foreach $i (0..$#dirs)
 {
     $dd = $dirs[$i];
@@ -39,20 +39,24 @@ foreach $i (0..$#dirs)
 open POS, "<", $allpos or die "Cannot open $allpos\n";
 @chrom = ();
 @gpos = ();
+@refbp = ();
 while ($line = <POS>)
 {
     chomp $line;
     @ln = split /,/, $line;
     push @chrom, $ln[0];
-    push @gpos, $ln[1];
+    push @gpos,  $ln[1];
+    push @refbp, $ln[2];
 }
 close POS;
 @ord = sort {@chrom[$a] cmp $chrom[$b] || $gpos[$a] <=> $gpos[$b]} (0..$#gpos);
 @chrom = @chrom[@ord];
 @gpos = @gpos[@ord];
+@refbp = @refbp[@ord];
 
 print ",", join(",", @chrom), "\n";
 print ",", join(",", @gpos), "\n";
+print "reference,", join(",", @refbp), "\n";
 
 foreach $dd (@dirs)
 {
@@ -64,7 +68,7 @@ foreach $dd (@dirs)
     foreach $i (0..$#gpos)
     {
         $seq = 'N';
-        $gpos_str = quote("$chrom[$i],$gpos[$i],");
+        $gpos_str = quotemeta("$chrom[$i],$gpos[$i],");
         @cpos_match = grep {$_=~/$gpos_str/} @info;
         @ln = split /,/, $cpos_match[0];
         $cpos_str = "$ln[2],$ln[3]";
