@@ -132,7 +132,7 @@ if ($command eq "pipeline")
                 $tmpbamfile = "$outdir/contigs_unsorted.bam";
                 
                 system ("$BWA index $ctgfile -p $ctgfile.cgi");
-                system ("$BWA mem -M $ctgfile.cgi $reads1 $reads2 > $samfile");
+                system ("$BWA mem -M $ctgfile $reads1 $reads2 > $samfile");
                 system ("$SAMTOOLS faidx $ctgfile");
                 system ("$SAMTOOLS view -bt $ctgffile.fai -o $tmpbamfile $samfile");
                 system ("$SAMTOOLS sort $tmpbamfile $bamstem");

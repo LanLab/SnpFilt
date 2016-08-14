@@ -6,7 +6,8 @@ CURRDIR=$(pwd)
 
 # Directory where the program is installed
 #SCRIPTDIR="$CURRDIR/snpfilt"
-SCRIPTDIR=/srv/scratch/lanlab/SnpFilt
+SCRIPTDIR=${HOME}/snpfilt
+OSTYPE=$(uname -s)
 
 # Dependent programs
 # By default, the script will look for versions on the path
@@ -60,7 +61,7 @@ if [ -z $res ]
 then 
     echo -n "installing into $SCRIPTDIR"
     cd third_party
-    tar -xvzf lastz-1.02.00.tar.gz
+    tar -xvzf lastz-distrib-1.02.00.tgz
     cd lastz-distrib-1.02.00/src
     export LASTZ_INSTALL=$SCRIPTDIR
     make
@@ -80,10 +81,12 @@ else
     echo " $LASTZ [OK]"
 fi
 
+# SAMtools and BCFtools are now always installed
+# to avoid problems between versions
 echo -n "Checking samtools ..."
-res=$(type -P $SAMTOOLS)
-if [ -z $res ]
-then 
+#res=$(type -P $SAMTOOLS)
+#if [ -z $res ]
+#then 
     echo "installing into $SCRIPTDIR"
     cd third_party
     tar xvjf samtools-1.2.tar.bz2
@@ -100,15 +103,15 @@ then
         echo "Could not install samtools"
         exit 1
     fi
-else
-    SAMTOOLS=$res
-    echo " $SAMTOOLS [OK]"
-fi
+#else
+#    SAMTOOLS=$res
+#    echo " $SAMTOOLS [OK]"
+#fi
 
 echo -n "Checking bcftools ..."
-res=$(type -P $BCFTOOLS)
-if [ -z $res ]
-then 
+#res=$(type -P $BCFTOOLS)
+#if [ -z $res ]
+#then 
     echo "installing into $SCRIPTDIR"
     cd third_party
     tar xvjf bcftools-1.2.tar.bz2
@@ -125,10 +128,10 @@ then
         echo "Could not install samtools"
         exit 1
     fi
-else
-    BCFTOOLS=$res
-    echo " $BCFTOOLS [OK]"
-fi
+#else
+#    BCFTOOLS=$res
+#    echo " $BCFTOOLS [OK]"
+#fi
 
 echo -n "Checking spades ..."
 res=$(type -P $SPADES)
@@ -136,9 +139,9 @@ if [ -z $res ]
 then 
     echo "installing into $SCRIPTDIR"
     cd third_party
-    tar -xvzf SPAdes-3.6.1-Linux.tar.gz
-    mv SPAdes-3.6.1-Linux $SCRIPTDIR
-    SPADES="${SCRIPTDIR}/SPAdes-3.6.1-Linux/bin/spades.py"
+    tar -xvzf SPAdes-3.9.0-${OSTYPE}.tar.gz
+    mv SPAdes-3.9.0-${OSTYPE} $SCRIPTDIR
+    SPADES="${SCRIPTDIR}/SPAdes-3.9.0-${OSTYPE}/bin/spades.py"
     cd $CURRDIR
 else
     SPADES=$res
@@ -151,11 +154,11 @@ if [ -z $res ]
 then 
     echo "installing into $SCRIPTDIR"
     cd third_party
-    tar -xvjf bwa-0.7.12.tar.bz2
-    mv bwa-0.7.12 $SCRIPTDIR
-    cd ${SCRIPTDIR}/bwa-0.7.12
+    tar -xvjf bwa-0.7.15.tar.bz2
+    mv bwa-0.7.15 $SCRIPTDIR
+    cd ${SCRIPTDIR}/bwa-0.7.15
     make
-    BWA="${SCRIPTDIR}/bwa-0.7.12/bwa"
+    BWA="${SCRIPTDIR}/bwa-0.7.15/bwa"
     cd $CURRDIR
 else
     BWA=$res
